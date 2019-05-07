@@ -28,6 +28,8 @@ SITE_API=http://192.168.10.109:1998"
         sh('rm -rf ' + staging + '*')
         sh('mkdir -vp ' + staging + 'public')
         sh('cp -rp node_modules ' + staging + '/')
+        sh('cp -rp src ' + staging + '/')
+        sh('cp -rp src/index.html ' + staging + 'public' + '/');
         sh('cp server.js ' + staging)
 
       }
