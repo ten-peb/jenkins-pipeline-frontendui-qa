@@ -27,7 +27,7 @@ SITE_API=http://192.168.10.109:1998"
       dir(clone_to){
         sh('rm -rf ' + staging + '*')
         sh('mkdir -vp ' + staging + 'public')
-        sh('cp -rp node_modules ' + staging + '/public/')
+        sh('cp -rp node_modules ' + staging + '/')
         sh('cp server.js ' + staging)
 
       }
