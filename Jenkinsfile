@@ -33,5 +33,7 @@ SITE_API=http://192.168.10.109:1998"
       }
   }
   stage("Trigger Deployment") {
+    build ('BuildDockerContainers')
+    
   }
 }
