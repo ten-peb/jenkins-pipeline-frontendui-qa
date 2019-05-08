@@ -25,13 +25,13 @@ SITE_API=http://192.168.10.109:1998"
   stage("Stage Files"){
       def String staging = '/data/staging/ui/'
       dir(clone_to){
-        sh('rm -rf ' + staging + '*')
-        sh('mkdir -vp ' + staging + 'public')
-        sh('cp -rp node_modules ' + staging + '/')
-        sh('cp -rp src ' + staging + '/')
-        sh('cp -rp src/index.html ' + staging + 'public' + '/');
-        sh('cp server.js ' + staging)
-
+//        sh('rm -rf ' + staging + '*')
+//        sh('mkdir -vp ' + staging + 'public')
+//        sh('cp -rp node_modules ' + staging + '/')
+//        sh('cp -rp src ' + staging + '/')
+//        sh('cp -rp src/index.html ' + staging + 'public' + '/');
+//        sh('cp server.js ' + staging)
+          sh('find . -depth -print | cpio -pdmv ' + staging + '/');
       }
   }
   stage("Trigger Deployment") {
