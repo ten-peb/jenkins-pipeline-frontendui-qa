@@ -1,10 +1,15 @@
 node("master"){
   def String stage_dir = '/data/staging/ui'
   def String ui_repo = 'git@github.com:tenna-llc/frontend-web.git'
-  def String clone_to = 'ui' 
+  def String clone_to = 'ui'
+  def String self_repo = 'git@github.com:ten-peb/jenkins-pipeline-frontendui-qa.git'
+  def String self_clone_to = 'fe-qa' 
   stage("Init"){
     sh('rm -rf ' + clone_to) // remove cruft if exists
-    doGitClone(ui_repo,clone_to)
+    sh('rm -rf ' + self_clone_to)
+    doGitClone(ui_repo,clone_to,"develop")
+    doGitClone(self_repo,self_clone_to)
+    
   }
   stage("build"){
     def String env_stuff = '''
@@ -25,14 +30,16 @@ SITE_API=http://192.168.10.109:1998"
   stage("Stage Files"){
       def String staging = '/data/staging/ui/'
       dir(clone_to){
-//        sh('rm -rf ' + staging + '*')
-//        sh('mkdir -vp ' + staging + 'public')
-//        sh('cp -rp node_modules ' + staging + '/')
-//        sh('cp -rp src ' + staging + '/')
-//        sh('cp -rp src/index.html ' + staging + 'public' + '/');
-//        sh('cp server.js ' + staging)
           sh('find . -depth -print | cpio -pdmv ' + staging + '/');
       }
+  } 
+  stage("build image"){
+     dir(self_clone_to + '/ui/ui' )
+       sh ('cp -rp /data/staging/ui/* ./')
+     }
+     dir(self_clone_to + '/ui') { 
+       sh('docker build -t ' + image_name + ':' + image_tag + ' .')
+       sh('docker build -t ' + image_name + ':latest'  + ' .')
   }
   stage("Trigger Deployment") {
     build ('BuildDockerContainers')
