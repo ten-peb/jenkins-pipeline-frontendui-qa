@@ -34,8 +34,9 @@ SITE_API=http://192.168.10.109:1998"
       }
   } 
   stage("build image"){
-     dir(self_clone_to + '/ui/ui' )
-       sh ('cp -rp /data/staging/ui/* ./')
+     dir(self_clone_to + '/ui' )
+       sh('mkdir ui')
+       sh ('cp -rp /data/staging/ui/* ./ui/')
      }
      dir(self_clone_to + '/ui') { 
        sh('docker build -t ' + image_name + ':' + image_tag + ' .')
