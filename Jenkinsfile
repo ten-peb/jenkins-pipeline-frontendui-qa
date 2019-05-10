@@ -41,6 +41,7 @@ SITE_API=http://192.168.10.109:1998"
      dir(self_clone_to + '/ui') { 
        sh('docker build -t ' + image_name + ':' + image_tag + ' .')
        sh('docker build -t ' + image_name + ':latest'  + ' .')
+     }
   }
   stage("Trigger Deployment") {
     build ('BuildDockerContainers')
