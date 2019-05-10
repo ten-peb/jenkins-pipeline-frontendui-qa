@@ -3,7 +3,9 @@ node("master"){
   def String ui_repo = 'git@github.com:tenna-llc/frontend-web.git'
   def String clone_to = 'ui'
   def String self_repo = 'git@github.com:ten-peb/jenkins-pipeline-frontendui-qa.git'
-  def String self_clone_to = 'fe-qa' 
+  def String self_clone_to = 'fe-qa'
+  def String image_name = 'tenna-ui'
+  def String image_tag  = '0.5.0'
   stage("Init"){
     sh('rm -rf ' + clone_to) // remove cruft if exists
     sh('rm -rf ' + self_clone_to)
