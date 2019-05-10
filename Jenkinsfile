@@ -30,7 +30,7 @@ SITE_API=http://192.168.10.109:1998"
   stage("Stage Files"){
       def String staging = '/data/staging/ui/'
       dir(clone_to){
-          sh('find . -depth -print | cpio -pdmv ' + staging + '/');
+          sh('rsync -avz --verbose --recursive --cvs-exclude --delete --delete-excluded . /data/staging/ui/')
       }
   } 
   stage("build image"){
