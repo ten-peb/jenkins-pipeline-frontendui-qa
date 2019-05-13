@@ -1,22 +1,19 @@
-FROM ubuntu-nodejs-10:0.5.0
+FROM ubuntu-nodejs-11:latest
 MAINTAINER Peter L. Berghold <pberghold@tenna.com>
 
 EXPOSE 8081
 
-WORKDIR /var/www/html
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-#RUN mkdir public 
-#COPY ui/node_modules/ ./node_modules/
-#COPY ui/src/ ./src/
-#COPY ui/src/index.html ./public/
-#COPY ui/server.js ./
-COPY ui/ /var/www/html/
+COPY . . 
+COPY package.json ./
+RUN npm install --silent
 
-RUN npm install
-RUN npm cache clean --force
+ENV PATH /usr/src/app/node_modules:.bin:$PATH
+ENV NODE_ENV=development
+ENV PORT=8081
 
-
-# CMD ["node","server.js"]
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
