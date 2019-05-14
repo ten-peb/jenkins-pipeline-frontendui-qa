@@ -1,7 +1,7 @@
 #!/bin/bash -xv 
 
 # cd /var/www/html && node server.js
-cd /var/www/html && npm start 
+cd /usr/src/app && npm start 
 
 while /bin/true
 do
