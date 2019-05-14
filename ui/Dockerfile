@@ -7,7 +7,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY ./ui/ . 
-COPY package.json ./
+COPY ./ui/package.json ./
 RUN npm install --silent
 
 ENV PATH /usr/src/app/node_modules:.bin:$PATH
