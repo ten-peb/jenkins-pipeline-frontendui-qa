@@ -6,7 +6,7 @@ EXPOSE 8081
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY . . 
+COPY ./ui/ . 
 COPY package.json ./
 RUN npm install --silent
 
