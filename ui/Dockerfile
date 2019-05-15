@@ -1,4 +1,4 @@
-FROM ubuntu-nodejs-11:latest
+FROM tenna/nodejs:latest
 MAINTAINER Peter L. Berghold <pberghold@tenna.com>
 
 EXPOSE 8081
@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 COPY ./ui/ . 
 COPY ./ui/package.json ./
+COPY ./.env.sample ./.env
 RUN npm install --silent
 
 ENV PATH /usr/src/app/node_modules:.bin:$PATH
