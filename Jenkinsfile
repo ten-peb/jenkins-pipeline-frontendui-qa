@@ -1,7 +1,7 @@
 node("master"){
   def String stage_dir = '/data/staging/ui'
   def String ui_repo = 'git@github.com:tenna-llc/frontend-web.git'
-  def String clone_to = 'few'
+  def String clone_to = 'ui'
   def String self_repo = 'git@github.com:ten-peb/jenkins-pipeline-frontendui-qa.git'
   def String self_clone_to = 'ui-pipeline'
   def String image_name = 'tenna-ui'
