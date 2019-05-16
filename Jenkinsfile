@@ -7,40 +7,14 @@ node("master"){
   def String image_name = 'tenna-ui'
   def String image_tag  = '0.5.0'
   stage("Init"){
-    sh('rm -rf ' + clone_to) // remove cruft if exists
     sh('rm -rf ' + self_clone_to)
     doGitClone(self_repo,self_clone_to)
-    dir(self_clone_to){
+      sh('rm -rf ' + clone_to) // remove cruft if exists
+     dir(self_clone_to + '/ui'){
       doGitClone(ui_repo,clone_to,"develop")
     }
   }
-  stage("build"){
-    def String env_stuff = '''
-BASE_URL=http://localhost:3000/api
-GOOGLE_API_KEY=AIzaSyAL0MuUIdL72AekYnnAYA9PGzbAPMXfcyE
-GOOGLE_MAP_CHANNEL=4.0
-ASSET_API=http://192.168.10.109:1998
-SITE_API=http://192.168.10.109:1998"
-'''
-
-    dir(clone_to){
-      sh('npm install')
-      // create our env file 
-      writeFile(file: '.env',text: env_stuff)
-      sh('sed -e \'102i     host: "0.0.0.0",\' -i webpack.config.js')
-    }
-  }
-  stage("Stage Files"){
-      def String staging = '/data/staging/ui/'
-      dir(clone_to){
-          sh('rsync -avz --verbose --recursive --cvs-exclude --delete --delete-excluded . /data/staging/ui/')
-      }
-  } 
   stage("build image"){
-     dir(self_clone_to + '/ui' ){
-       sh('mkdir ui')
-       sh ('cp -rp /data/staging/ui/* ./ui/')
-     }
      dir(self_clone_to + '/ui') { 
        sh('docker build -t ' + image_name + ':' + image_tag + ' .')
        sh('docker build -t ' + image_name + ':latest'  + ' .')
