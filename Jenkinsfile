@@ -1,17 +1,18 @@
 node("master"){
   def String stage_dir = '/data/staging/ui'
   def String ui_repo = 'git@github.com:tenna-llc/frontend-web.git'
-  def String clone_to = 'ui'
+  def String clone_to = 'few'
   def String self_repo = 'git@github.com:ten-peb/jenkins-pipeline-frontendui-qa.git'
-  def String self_clone_to = 'fe-qa'
+  def String self_clone_to = 'ui'
   def String image_name = 'tenna-ui'
   def String image_tag  = '0.5.0'
   stage("Init"){
     sh('rm -rf ' + clone_to) // remove cruft if exists
     sh('rm -rf ' + self_clone_to)
-    doGitClone(ui_repo,clone_to,"develop")
     doGitClone(self_repo,self_clone_to)
-    
+    dir(self_clone_to){
+      doGitClone(ui_repo,clone_to,"develop")
+    }
   }
   stage("build"){
     def String env_stuff = '''
