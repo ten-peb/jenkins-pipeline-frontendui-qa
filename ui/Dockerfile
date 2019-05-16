@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 COPY ./ui/ . 
 COPY ./ui/package.json ./
-COPY ./ui/.env  ./.env
+#   COPY ./ui/.env  ./.env
 RUN npm install --silent
 
 ENV PATH /usr/src/app/node_modules:.bin:$PATH
