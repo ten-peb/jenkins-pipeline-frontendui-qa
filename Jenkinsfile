@@ -9,9 +9,12 @@ node("master"){
   stage("Init"){
     sh('rm -rf ' + self_clone_to)
     doGitClone(self_repo,self_clone_to)
+    dir(self_clone_to + '/ui'){
       sh('rm -rf ' + clone_to) // remove cruft if exists
-     dir(self_clone_to + '/ui'){
       doGitClone(ui_repo,clone_to,"develop")
+    }
+    dir(self_clone_to) {
+      sh('tree .')
     }
   }
   stage("build image"){
